@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>图片轮播</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			ul{
+				list-style: none;
+			}
+			.main{
+				width: 760px;
+				height: 300px;
+				position: relative;
+				margin: 50px auto;
+			}
+			.pic{
+				width: 760px;
+				height: 300px;
+				overflow: hidden;
+			}
+			.pic ul li{
+				width: 760px;
+				height: 300px;
+				position: absolute;
+				overflow: hidden;
+			}
+			.img1{
+				position: absolute;
+				left: -760px;
+				top: 0px;
+			}
+			.img2{
+				position: absolute;
+				left: -20px;
+				top: 0px;
+			}
+			.nav{
+				width: 125px;
+				height: 30px;
+				position: absolute;
+				left: 620px;
+				bottom: 10px;
+			}
+			.nav ul li{
+				width: 15px;
+				height: 15px;
+				border: 1px solid #fff;
+				float: left;
+				margin-left: 5px;
+			}
+			.select{
+				background: #fff;
+			}
+		</style>
+		<script src="js/jquery-1.12.3.js"></script>
+		<script type="text/javascript">
+			;$(function(){
+				var index =0;  //当前显示li的下标
+				$(".pic ul li").eq(index).find(".img1").animate({"left":"0px"},1000,function(){
+					$(".pic ul li").eq(index).find(".img2").css("display","block");
+					$(".pic ul li").eq(index).find(".img2").animate({"left":"0px"},1000);
+				})
+			});
+		</script>
+	</head>
+	<body>
+		<div class="main">
+			<div class="pic">
+				<ul>
+					<li style="background: url(img/bg1.jpg);">
+						<img class="img1" src="img/text1.png"/>
+						<img class="img2" src="img/con1.png"/>
+					</li>
+					<li style="background: url(img/bg2.jpg);">
+						<img class="img1" src="img/text2.png"/>
+						<img class="img2" src="img/con2.png"/>
+					</li>
+					<li style="background: url(img/bg3.jpg);">
+						<img class="img1" src="img/text3.png"/>
+						<img class="img2" src="img/con3.png"/>
+					</li>
+					<li style="background: url(img/bg4.jpg);">
+						<img class="img1" src="img/text4.png"/>
+						<img class="img2" src="img/con4.png"/>
+					</li>
+					<li style="background: url(img/bg5.jpg);">
+						<img class="img1" src="img/text5.png"/>
+						<img class="img2" src="img/con5.png"/>
+					</li>
+				</ul>
+			</div>
+			<div class="nav">
+				<ul>
+					<li class="select"></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>
