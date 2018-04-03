@@ -1,0 +1,37 @@
+
+body{background: #5390f9 !important; z-index:99999;}
+
+/*.botbg{ position: fixed; left:0; bottom: 0;}*/
+.botbg img { display: block; width: 7.49rem; max-height:3.28rem;;}
+.index-top{
+	position: relative;
+	height: 7rem;
+	background: -webkit-linear-gradient(to bottom, #8be2ff , #5390f9); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(to bottom, #8be2ff , #5390f9); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(to bottom, #8be2ff , #5390f9); /* Firefox 3.6 - 15 */
+	background: linear-gradient(to bottom, #8be2ff , #5390f9);
+}
+.type-wrap{padding-top:1.03rem;position:absolute;left:50%;top:0;margin-left:-2.4rem;}
+.type-wrap img{ display: block;width:4.8rem; margin:0 auto;}
+.type1{z-index:1;}
+.type2{z-index:2; display: none;}
+.type3{z-index:3; display: none;}
+.type4{z-index:4; display: none;}
+.type5{z-index:5; display: none;}
+.result{ position: absolute; left:40%;top:29%; color:#fff; font-size: .28rem;}
+.result h1{ font-size: .7rem; left:-13px;}
+.result h2{ font-size: .36rem;left:-42px; margin-top:1rem;}
+
+.recharge-btn .btn{ background: #fff; color:#50A5FC;z-index:999;}
+.recharge-btn .btn2{ background: none; border:1px solid #fff; z-index:9999;
+    display: block;
+    margin: 0 10%;
+    width: 40%;
+    height: 0.8rem;
+    line-height: 0.8rem;;
+    color: #fff;
+    border-radius: 0.4rem;
+    box-sizing: border-box;
+    max-width: 600px;
+    font-size: 0.34rem;margin:0.5rem auto 0 auto;}
+

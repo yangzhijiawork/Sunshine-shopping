@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <title>风险评估</title>
+	    <link href="../css/common.css" rel="stylesheet"/>
+	  	<link href="../mxb-css/risk.css" rel="stylesheet" />
+	  	<script src="../js/jquery.min.js"></script>
+		<script src="../js/layer.js"></script>
+		<script src="../js/common.js"></script>
+		<style>
+			.wrap{ padding:0.24rem 0.3rem 0.06rem;}
+			.wrap h4{ margin:.15rem 0;}
+			.wrap p{ margin-bottom:.15rem;}
+			.wrap p.cont{ text-indent: 24px;}
+		</style>
+	</head>
+	<body>
+		<header class="wrap-header">
+			<a href="javascript:history.go(-1);"><img src="../img/back.png" class="float-left"/></a>
+			<p>风险评估</p>
+		</header>
+		<section class="wrap-container text-center risk">
+			<p class="font-26-rem risk-num"><span class="font-30-rem">10</span>/10</p>
+			<h1>您的投资出现何种程度的波动时，您会呈现明显的焦虑?</h1>
+			<ul>
+				<li>
+					<p class="float-left">本金无损失，但收益未达预期</p>
+					<img src="../mxb-img/mxb-ok.png"/>
+				</li>
+				<li>
+					<p class="float-left">出现轻微本金损失</p>
+					<img src="../mxb-img/mxb-ok.png"/>
+				</li>
+				<li>
+					<p class="float-left">本金 10%以内的损失</p>
+					<img src="../mxb-img/mxb-ok.png"/>
+				</li>
+				<li>
+					<p class="float-left">本金 20-50%的损失</p>
+					<img src="../mxb-img/mxb-ok.png"/>
+				</li>
+				<li>
+					<p class="float-left">本金 50%以上损失</p>
+					<img src="../mxb-img/mxb-ok.png"/>
+				</li>
+			</ul>
+			<div class="agree clearfix">
+				<div class="">
+					    <div class="fruits">
+					        <div class="check">
+					            <label for="infoConfirm" class=text"">
+					            	<p class="font-13-rem float-right">本人确认收到<a  class="color-50a5fc
+notification">《投资者风险匹配告知书》</a>，并确认
+<a  class="color-50a5fc confirmation">《投资者确认函》</a>为本人真实有效声明。</p></label>
+					            <input type="checkbox" name="fruit2" class="selects" id="infoConfirm">
+					            <div class="user-defineds">
+					            </div>
+					        </div>
+					    </div>
+				</div>
+			</div>
+			<div class="risk-btn">
+				<button class="btn  color-fff" disabled="disabled" type="button">提交</button>
+			</div>
+		</section>
+		<script>
+			$('.notification').click(function () {
+				layer.open({
+					content: '<section class="wrap-container wrap"><p>尊敬的中原直销银行：</p> <p class="cont"> 本人已仔细阅读贵司的《投资者类型及风险匹配告知书》，已充分知晓并理解贵司对本人的风险承受能力评估及产品、服务风险等级匹配结果。本人对该《投资者类型及风险匹配告知书》内容没有异议，愿意遵守法律、法规及贵司有关规定，通过贵司购买产品或者服务。本人承诺，将及时以书面方式如实地向贵司告知本人的重大信息变更。本确认函系本人独立、自主、真实的意思表示。特此确认。</p> </section>',
+					btn: '我知道了',
+				});
+				return false;//阻止冒泡事件和默认事件
+			});
+
+			$('.confirmation').click(function () {
+				layer.open({
+					content: '<section class="wrap-container wrap"><p>尊敬的投资者：</p><p class="cont">根据您填写的投资者基本信息表，依据相关法律、法规的规定，我司将您认定为普通投资者。</p><p class="cont">结合您填写的风险测评问卷以及其他相关信息，我司对您的风险承受能力进行了综合评估。我司在此郑重提醒，我司向您销售的产品或提供的服务将以您的风险承受能力等级和投资品种、期限为基础，若您提供的信息发生任何重大变化，您应对及时以书面方式通知我司。我司建议您审慎评判自身风险承受能力、结合自身投资行为，做出审慎的投资判断。</p> </section>',
+					btn: '我知道了',
+				});
+				return false;//阻止冒泡事件和默认事件
+			});
+
+			$('ul li').on('click',function(){
+				var index=$(this).index("li");
+			    $('li img').each(function(){
+			    		$(this).css('display','none');
+			    })
+		       	$('li img').eq(index).css('display','block');
+				var risk10 = $(this).children('p').text().trim();
+				addCookie('risk10',risk10,0);
+			});
+
+			var riskAnswer = [];
+			/*复选效果*/
+		$(".check").click(function(){
+		  	$(this).find("div").toggleClass("circles");// 检查每个元素中指定的类。如果不存在则添加类，如果已设置则删除之
+			if($('.selects').prop('checked')){
+				// 判断所有问题是否已经勾选
+				for(var i = 1;i <= 10;i++){
+					if(getCookie('risk' + i)){
+						riskAnswer.push(getCookie('risk' + i));
+					}
+				}
+				if(riskAnswer.length != 10){
+					layer.open({
+							content:'您还有问题没有回答哦<br>"确定"将会返回风险评估首页,"取消"则留在本页',
+							btn:['确定','取消'],
+							skin:'footer',
+							yes: function(){
+								location.href="risk-one.html";
+						}
+					});
+				}else{
+					$('.btn').removeClass('bg-ccc').addClass('bg-50a5fc').attr("disabled",false);
+				}
+			}else{
+				$('.btn').removeClass('bg-50a5fc').addClass('bg-ccc').attr("disabled",true);
+				// 清空数组.否则再次选中checkbox后会向该数组内继续push
+				riskAnswer = [];
+			}
+		});
+			$('.btn').click(function () {
+
+			});
+		</script>
+	</body>
+</html>

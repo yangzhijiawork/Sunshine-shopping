@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<title>秒息宝</title>
+<link href="../css/common.css" rel="stylesheet" />
+<link href="../mxb-css/mxb-index.css" rel="stylesheet" />
+<script src="../js/common.js"></script>
+<script src="../js/echars-common.js"></script>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/layer.js"></script>
+</head>
+<body>
+	<header class="wrap-header">
+		<a href="javascript:history.go(-1)"><img src="../img/back.png" class="float-left" /><a />
+			<p>秒息宝</p>
+	</header>
+	<section class="wrap-container text-center index">
+		<div class="index-top clearfix">
+			<p class="index-title">
+				<span class="font-15-rem">秒息宝 </span>南方现金通货币E（000719）
+			</p>
+			<span class="index-mark">?</span>
+			<h1>0.00</h1>
+			<p class="index-profit">昨日收益(元)</p>
+			<ul class="clearfix mxb-assets">
+				<li>
+					<p class="font-20-rem">0.00</p> <span class="font-12-rem">持有资产(元）</span>
+				</li>
+				<li>
+					<p class="font-20-rem">0.00</p> <span class="font-12-rem">累计收益(元)</span>
+				</li>
+			</ul>
+		</div>
+		<div class="mxb-margin"></div>
+		<div class="mxb-container">
+			<ul class="clearfix">
+				<li>
+					<h1 class="font-20-rem">0.0000</h1>
+					<p class="font-12-rem">7日年化(%)</p>
+				</li>
+				<li>
+					<h1 class="font-20-rem">0.0000</h1>
+					<p class="font-12-rem">万份收益(元)</p>
+				</li>
+			</ul>
+			<div id="main" style="height: 160px;"></div>
+			<!--<div id="main1" style="height: 160px;"></div>-->
+			<div class="mxb-btn">
+				<button class="bg-fff color-50a5fc" type="button">转出</button>
+				<button class="bg-50a5fc color-fff" type="button">转入</button>
+			</div>
+		</div>
+		<div>
+			<button class="jump" style="background:none;">余额自动转入></button>
+		</div>
+	</section>
+	<script>
+			$(".index-mark").click(function () {
+				location.href = 'mxb-introduce.html';
+			});
+
+
+			$(".mxb-btn .bg-fff").click(function () {
+				location.href = 'mxb-out.html';
+			});
+
+			$('.mxb-container li:first').click(function () {
+				qiriYield(product7daysList);
+			});
+
+			$('.mxb-container li:last-child').click(function () {
+				wanYield(product7daysList);
+			});
+
+
+		/* 	var data = [{"updateDate":"20170828","tenThousandIncome":"1.0933","weekRate":"0.04266"},
+			{"updateDate":"20170829","tenThousandIncome":"1.1092","weekRate":"0.04153"},
+			{"updateDate":"20170823","tenThousandIncome":"1.1235","weekRate":"0.04278"},
+			{"updateDate":"20170824","tenThousandIncome":"1.1240","weekRate":"0.04280"},
+			{"updateDate":"20170827","tenThousandIncome":"1.1148","weekRate":"0.04278"},
+			{"updateDate":"20170826","tenThousandIncome":"1.1186","weekRate":"0.04282"},
+			{"updateDate":"20170825","tenThousandIncome":"1.1213","weekRate":"0.04284"}]; */
+
+
+//			qiriYield(data);
+//			wanYield(data);
+			// 七日年化
+			function qiriYield(data) {
+				var arrays = new Array();
+				var array1 = new Array();
+				var tmpArray = new Array();
+				var tmp;
+				var min, max; //y轴的最小最大值
+				for(var i = 0; i < data.length; i++) {
+					tmp = (parseFloat(data[i].weekRate) * 100).toFixed(4);// 保留四位小数
+					if(i == 0) {
+						max = min = tmp;
+					} else {
+						min = tmp < min ? tmp : min;
+						max = tmp > max ? tmp : max;
+					}
+					tmpArray.push({
+						weekRate: tmp,
+						updateDate: parseInt(data[i].updateDate)
+					})
+				}
+				max = parseFloat(max)+0.05;
+				min = parseFloat(min);
+				min = min < 0.05 ? min : min - 0.05;
+				max = max.toFixed(2);
+				min = min.toFixed(2);
+				
+//				console.log('min',min);
+//				console.log('max',max);
+				//进行排序
+				tmpArray.sort(function(a, b) {
+//		比较函数的参数:若 a 小于 b，在排序后的数组中 a 应该出现在 b 之前，则返回一个小于 0 的值。
+					return a.updateDate - b.updateDate;
+				});
+				for(var i = 0; i < tmpArray.length; i++) {
+					tmp = tmpArray[i];
+					arrays.push(tmp.weekRate);// 收益值
+					array1.push(tmp.updateDate.toString().substring(4, 6) + "-" + tmp.updateDate.toString().substring(6));// 拼接x轴日期
+				}
+//				console.log('arrays',arrays)
+				var myChart = echarts.init(document.getElementById('main'), 'macarons');// 第二个参数是主题
+				myChart.setOption({
+					tooltip: { // tooltip 提示框组件
+						trigger: 'axis',//出发类型  'axis' 坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
+						show: true,
+						formatter: function(params, ticket, callback) {
+							// 提示框浮层内容格式器，支持字符串模板和回调函数两种形式
+							// 回调函数形式:	(params: Object|Array, ticket: string, callback: (ticket: string, html: string)) => string
+							console.log('params',params);
+							var res = params[0].name + ":";
+							res += "<br/>七日年化收益:" 
+								+"<span style='color:red;font-size:24px;text-shadow:0 0 5px #fff';>" 
+								+params[0].value
+								+"</span>%";
+							return res;
+						},
+					},
+					legend: {
+						data: [] //图例的数据数组
+					},
+					grid: {// 坐标系绘图网格
+						x: 40, //左边距
+						y: "10%",
+						height: "80%",
+						left: "18%"
+					},
+					calculable: false,
+					xAxis: [{ // x轴
+						boundaryGap: false,// 坐标轴两边留白策略
+						type: 'category', // 坐标轴类型 'category' 类目轴，适用于离散的类目数据，为该类型时必须通过 data 设置类目数据
+						data: array1, // 类目数据，在类目轴（type: 'category'）中有效。
+						axisLine: {// 坐标轴轴线相关设置。
+							show: false
+						},
+						axisTick: { // 坐标轴刻度相关设置
+							show: false
+						},
+						axisLabel: { // 坐标轴刻度标签的相关设置
+							margin: 0,
+							interval:0 // 设置成 0 强制显示所有标签
+						}
+					}],
+					yAxis: [{
+						type: 'value', // 'value' 数值轴，适用于连续数据。
+						position: 'left',
+						axisLine: { // 轴线
+							show: false
+						},
+						max: max,
+						min: min,
+						axisLabel: { // 坐标轴刻度标签的相关设置
+							show: true,
+							interval: 'auto', // 粗细
+							rotate: 0, //左侧标记旋转角度
+							margin: 5, //刻度标签与轴线之间的距离
+							formatter: function(value,index){
+								console.log('value',value.toFixed(2))
+								return value.toFixed(2)+' %';
+							},
+							textStyle: {
+								color: '#1e90ff',
+								fontFamily: 'verdana',
+								fontSize: 10,
+								fontStyle: 'normal',
+								fontWeight: 'normal'
+							}
+						},
+						axisTick: {
+							show: false
+						}
+					}],
+	
+					series: [{
+						name: '七日年化收益', //变量标题
+						type: 'line',
+						stack: '',// 数据堆叠
+						symbol: "circle",// 标记的图形
+						smooth: true,// 是否平滑曲线显示
+						itemStyle: {// 折线拐点标志的样式
+							normal: {
+								color: "#52affc",
+								borderWidth: 1,
+								borderColor: "white",
+								lineStyle: {
+									color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+										offset: 0,
+										color: '#5090fc'
+									}, {
+										offset: 0.5,
+										color: '#52affc'
+									}, {
+										offset: 1,
+										color: '#53d2fc'
+									}])
+								},
+								areaStyle: {
+									color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+										offset: 0,
+										color: '#5090fc'
+									}, {
+										offset: 0.5,
+										color: '#52affc'
+									}, {
+										offset: 1,
+										color: '#53d2fc'
+									}])
+								},
+							}
+						},
+						data: arrays
+					}]
+				});
+			}
+			
+			// 万份收益
+			function wanYield(funMessage) {
+				var arrayzx = new Array();
+				var arrayzy = new Array();
+				var tmpArray = new Array();
+				var tmp;
+				var syl = funMessage;
+				for(var i = 0; i < syl.length; i++) {
+					tmpArray.push({
+						tenThousandIncome: parseFloat(syl[i].tenThousandIncome),
+						updateDate: parseInt(syl[i].updateDate)
+					})
+	
+				}
+	
+				//进行排序
+				tmpArray.sort(function(a, b) {
+					return a.updateDate - b.updateDate;
+				});
+				for(var i = 0; i < tmpArray.length; i++) {
+					tmp = tmpArray[i];
+					arrayzx.push(tmp.updateDate.toString().substring(4, 6) + "-" + tmp.updateDate.toString().substring(6));
+					arrayzy.push(tmp.tenThousandIncome);
+				}
+	
+				var myChart1 = echarts.init(document.getElementById('main'), 'macarons');
+				myChart1.setOption({
+					tooltip: {
+						trigger: 'axis',
+						formatter: function(params, ticket, callback) {
+							var res = params[0].name + ":";
+							res += "<br/>万份收益:" +
+								"<span style='color:red;font-size:24px;text-shadow:0 0 5px #fff';>" +
+								params[0].value +
+								"</span>元";
+							return res;
+						},
+					},
+					legend: {
+						data: [] //图表标题
+					},
+					grid: {
+						x: 40, //左边距
+						y: "10%",
+						height: "80%"
+					},
+					calculable: false,
+					xAxis: [{
+						type: 'category',
+						data: arrayzx,
+						axisLine: {
+							show: false
+						},
+						axisTick: {
+							show: false
+						},
+						axisLabel: {
+							interval:0,
+							margin: 0
+						}
+					}],
+					yAxis: [{
+						type: 'value',
+						position: 'left',
+						axisTick: {
+							show: false
+						},
+						axisLine: { // 轴线
+							show: false,
+						},
+						axisLabel: {
+							show: true,
+							interval: 'auto', // 粗细
+							rotate: 0, //左侧标记旋转角度
+							margin: 5, //距离图表距离
+							formatter: '{value}元', // 
+							textStyle: {
+								color: '#1e90ff',
+								fontFamily: 'verdana',
+								fontSize: 10,
+								fontStyle: 'normal',
+								fontWeight: 'normal'
+							}
+						}
+					}],
+	
+					series: [{
+						name: '万份收益', //变量标题
+						type: 'bar',
+						stack: '',
+						barWidth: 30,
+						data: arrayzy,
+						itemStyle: {
+							normal: {
+								color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+									offset: 0,
+									color: '#5090fc'
+								}, {
+									offset: 0.5,
+									color: '#52affc'
+								}, {
+									offset: 1,
+									color: '#53d2fc'
+								}]),
+								shadowColor: 'rgba(0, 0, 0, 0.4)',
+								shadowBlur: 20
+							}
+						}
+					}]
+				});
+			}
+		$(function () {
+			var  firstBuyFlag,evaluation,firstBuyFlag,total_vol,totalInLimit;
+			// 用户基本信息接口
+			$.ajax({
+				type:'post',
+				url:'http://localhost:8080/fop-web/mxbtransaction/mxbUserInfo.do',
+				data:{
+					fundCode:201709,
+				},
+				async:false,
+				dataType:'json',
+				success:function (data) {
+					var data = data.availableBal;
+					if(data.errorCode == '000000'){
+						// 总份额
+						total_vol = data.total_vol;
+						var totalVol = fmoney(total_vol);
+						$('.mxb-assets li:first .font-20-rem').text(totalVol);
+						// 昨日收益
+						var ocurrIncome = fmoney(data.ocurr_income);
+						$('.index-mark').next().text(ocurrIncome);
+						// 累计收益
+						var totalIncome = fmoney(data.total_income);
+						$('.mxb-assets li:last .font-20-rem').text(totalIncome);
+						// 首次购买标示  首次购买标识， 默认0，0-从未购买，1-已购买
+						 firstBuyFlag = data.first_buy_flag;
+						// 测评标识，默认0，0-未测评，1-已测评
+						  evaluation = data.evaluation;
+					   // 自动转入标识 默认0，0-未开启，1-已开启
+						 autoFlag = data.auto_flag; 
+					  // 基金公司用户交易账号
+						var contractNo = data.contract_no;
+					}else if(data.errorCode == '400202'){
+						$('.mxb-btn .bg-fff').prop('disabled','disabled');
+						$('.jump').prop('disabled','disabled');
+						$(document).on('click','.mxb-btn .bg-50a5fc',function(){
+							location.href = 'risk-start.html';
+						});
+					}else{
+						var error = (data.errorCode === '999999')?'系统异常，请稍后再试！':data.errorMsg;
+						layer.open({
+							content:error,
+							time:2,
+							skin:'msg',
+						});
+					}
+				},
+			error:function(){
+				layer.open({
+					content:'连接超时,请刷新页面重试',
+					time:2,
+					skin:'msg',
+				});
+			}
+	});
+			// 产品信息接口
+			 $.ajax({
+					type:'post',
+					url:'http://localhost:8080/fop-web/mxbtransaction/mxbProductInfo.do',
+					data:{
+						fundCode:201709,
+					},
+					async:false,
+					dataType:'json',
+					success:function (data) {
+						if(data.errorCode == '000000'){
+							product7daysList = data.product7daysList;
+							qiriYield(product7daysList);
+							// 万分收益
+							var tenThousandIncome = data.tenThousandIncome;
+							$('.mxb-container li:last-child .font-20-rem').text(tenThousandIncome);
+							// 七日年化
+							var weekRate = data.weekRate;
+							$('.mxb-container li:first .font-20-rem').text(weekRate);
+							totalInLimit = data.totalInLimit;
+						}else{
+							var error = (data.errorCode === '999999')?'系统异常，请稍后再试！':data.errorMsg;
+							layer.open({
+								content:error,
+								time:2,
+								skin:'msg',
+							});
+						}
+					},
+					error:function(){
+						layer.open({
+							content:'连接超时,请刷新页面重试',
+							time:2,
+							skin:'msg',
+						});
+					}
+		});
+			//转入
+			$('.mxb-btn .bg-50a5fc').click(function(){
+				// 0 未测评 1测评
+				if(evaluation == 0){
+					location.href = 'risk-start.html';
+				}else if(evaluation == 1 && firstBuyFlag == 0){
+					location.href = 'info-confirm-step.html';
+				}else if(evaluation == 1 && firstBuyFlag == 1){
+					console.log('totalInLimit',totalInLimit);
+					console.log('total_vol',total_vol);
+					var remainMoney = Number(totalInLimit)-Number(total_vol);
+					location.href = 'mxb-into.html?remainMoney='+remainMoney+'&totalInLimit='+totalInLimit;
+				}
+			});
+			
+			// 自动转入
+			$(".jump").click(function () {
+				location.href = 'mxb-selfinto.html?autoFlag='+autoFlag;
+			});
+			
+			
+});
+			
+		</script>
+</body>
+</html>

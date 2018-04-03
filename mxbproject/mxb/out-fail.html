@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <title>转出结果</title>
+	    <link href="../css/common.css" rel="stylesheet"/>
+	  	<link href="../mxb-css/change-result.css" rel="stylesheet" />
+	  	<script src="../js/common.js"></script>
+	  	<script src="../js/jquery.min.js"></script>
+	</head>
+	<body>
+		<header class="wrap-header">
+			<img src="../img/back.png" class="float-left" onclick="location.href='mxb-out.html'" style="cursor: pointer;"/>
+			<p>转出结果</p>
+		</header>
+		<section class="wrap-container">
+			<div class="start-bg"><img src="../img/shenfen_shibai.png"/></div>
+			<h3 class="text-center color-333">抱歉！转出失败！</h3>
+			<div class="hint text-center color-666">失败原因:<span>网络超时</span></div>
+			<div class="recharge-btn start-btn1">
+				<button class="btn font-17-rem bg-50a5fc" type="button" onclick="location.href='<%=request.getContextPath()%>/myaccount/my-account.jsp'">查看我的账户</button>
+			</div>
+			<div class="recharge-btn start-btn2">
+				<button class="btn font-17-rem " type="button" onclick="location.href='mxb-out.html'">重试</button>
+			</div>
+		</section>
+		<script>
+			$(function () {
+				var errorReason=getQueryString('errorMsg');
+				$('.hint').children('span').text(errorReason);
+			});
+
+		</script>
+	</body>
+</html>

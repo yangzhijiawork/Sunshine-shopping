@@ -1,0 +1,43 @@
+html,body{
+	background: #fff;
+}
+.wrap-container-info{font-size: 0.3rem;text-indent: 0.24rem;}
+.wrap-container-info .alert{height: 1.2rem;line-height: 1.2rem;border-bottom:1px solid #e8e8e8;clear:both;}
+.wrap-container-info li{border-bottom:1px solid #e8e8e8;}	
+.select{ height:0.8rem;line-height: 0.8rem;}		
+.select .select-box span{ display: inline-block; margin:0 0.52rem;}
+
+input { padding: 0; margin: 0; border: 0; }
+
+.fruit:before { content: ""; display: table; }
+
+.fruit:after { content: ""; display: table; clear: both; }
+
+.fruit > div { position: relative; float: left; width: 47px; height: 39px; line-height: 40px; margin-right:.5rem; font-size: .28rem;}
+
+.fruit label { display: block; width: 36px; height: 40px; line-height: 40px; cursor: pointer; margin-left:.2rem;}
+
+.fruit input { z-index: 3; display: block; opacity: 0; position: absolute; top: 0; bottom: 0; left: -3px; margin: auto; width: .3rem; height: .3rem; cursor: pointer; }
+
+.fruit .user-defined { z-index: 2; position: absolute; top: 0; bottom: 0; left: 0; margin: auto; width: .22rem; height: .22rem; border: 1px solid #50a5fc; border-radius: 50%; cursor: pointer; }
+
+.fruit .user-defined span.circle  { display: block; width: .18rem; height: .18rem; margin-top:.02rem; margin-left: .02rem; background-color: transparent; border-radius: 50%; }
+
+.fruit .user-defined span.active  { background-color: #50a5fc; }
+
+.agree{ padding:.36rem .4rem; font-size: .26rem; color:#666;}
+.fruits{ position: relative;}
+.fruits .user-defineds{position: absolute; left:0; top:0}
+.fruits label{ width:94%; float: right; display: block; text-indent: 0;}
+.selects{ position: absolute; left: 0; top:0; z-index:9999;opacity: 0; width:.31rem;height:.31rem;}
+.user-defineds{display: block; width:.26rem; height:.26rem; border:1px solid #ccc;}
+.circles{ background: url(../img/sel4.png) no-repeat;background-size: cover;border: none;}
+
+.bg-4ba3ff{ background: #4ba3ff;}
+.recharge-btn{ margin-top:.5rem;}
+
+.control{ padding-bottom:.32rem; margin-top:.2rem; display: none;}
+.control .kz{ font-size: .26rem; float: left; height:.2rem;line-height: .33rem; color:#666}
+.control input{ width:66%; float: left; margin-left:.4rem;}
+
+.start-btn{ margin-top:3.26rem;}

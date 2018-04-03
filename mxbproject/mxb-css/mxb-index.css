@@ -1,0 +1,88 @@
+html,body{
+	background: #fff;
+	height: 100%;
+}
+.index-top{
+	height: 3.15rem;
+	background: -webkit-linear-gradient(to bottom, #5cc7f5 , #5390f9); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(to bottom, #5cc7f5 , #5390f9); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(to bottom, #5cc7f5 , #5390f9); /* Firefox 3.6 - 15 */
+	background: linear-gradient(to bottom, #5cc7f5 , #5390f9);
+	padding-top: 0.4rem;
+}
+.mxb-margin{
+	height: 0.2rem;
+	width: 100%;
+	background: #F2F2F2;
+}
+.index-title{
+	color: #fff;
+	font-size: 0.24rem;
+	text-align: left;
+	padding: 0 0 0 0.3rem;
+	float: left;
+}
+.index-mark{
+	border: 1px solid #fff;
+	border-radius:50%;
+	width: 0.33rem;
+	height: 0.33rem;
+	line-height: 0.33rem;
+	font-size: 0.24rem;
+	float: left;
+	color: #fff;
+}
+.index-top h1{
+	font-size: 0.6rem;
+	margin-top: 0.8rem;
+	line-height: 0.6rem;
+	color: #fff;
+	height:0.6rem;
+	clear:both;
+}
+.index-profit{
+	line-height:0.5rem;
+	font-size: 0.24rem;
+	color: #fff;
+}
+.mxb-assets li{
+	width: 50%;
+	float: left;
+	color: #fff;
+}
+
+/*柱形图*/
+.mxb-container{
+	background: #fff;
+	height: 100%;
+	border-bottom: 1px solid #e8e8e8;
+}
+.mxb-container ul{
+	margin-bottom: 0.3rem;
+}
+.mxb-container ul li{
+	width: 50%;
+	float: left;
+	color: #333;
+	padding-top:0.54rem;
+}
+.mxb-container ul li p{
+	color: #666;
+	display: inline;
+	padding-bottom: 0.2rem;
+	border-bottom: 2px solid #50a5fc;
+}
+/*按钮*/
+.mxb-btn{
+	margin: 0.7rem 0 0.4rem 0;
+}
+.mxb-btn button{
+	width: 2.7rem;
+	height: 0.8rem;
+	line-height: 0.8rem;
+	font-size: 0.32rem;
+	border: 1px solid #50A5FC;
+	border-radius: 0.8rem;
+	-webkit-border-radius: 0.8rem;
+}
+.jump{ font-size:.3rem; color:#666; margin-top:.3rem;}

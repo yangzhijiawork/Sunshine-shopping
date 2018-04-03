@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <title>信息确认 </title>
+	    <link href="../css/common.css" rel="stylesheet"/>
+	  	<link href="../mxb-css/info-confirm.css" rel="stylesheet" />
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/layer.js"></script>
+	  	<script src="../js/common.js"></script>
+	</head>
+	<body>
+		<header class="wrap-header">
+			<a href="javascript:history.go(-1)"><img src="../img/back.png" class="float-left"/></a>
+			<p>信息确认</p>
+		</header>
+		<section class="wrap-container wrap-container-info">
+			<form action="">
+			<p class="color-ff560c alert">您好，为了您的账户安全，请确认以下信息</p>
+			<ul>
+				<li>
+					<div class="select clearfix">
+						<span class="float-left">账户是否被他人实际控制</span>
+						<div class="float-right select-box">
+						<div class="icon">
+							    <div class="fruit" id="fruit">
+							        <div class="apple">
+							            <label for="ownAccount">是</label>
+							            <input type="radio" name="fruit" id="ownAccount" class="input input1" value="0">
+							            <div class="user-defined">
+							                <span class="circle"></span>
+							            </div>
+							        </div>
+							        <div class="banana">
+							            <label for="noOwnAccount">否</label>
+							            <input type="radio" name="fruit" id="noOwnAccount" class="input input2" value="1">
+							        	<div class="user-defined">
+							                <span class="circle"></span>
+							            </div>
+							        </div>
+							    </div>
+						</div>
+						</div>
+					</div>
+					<div class="clearfix control">
+						<p class="kz">控制情况</p>
+						<p class="inpu"><input type="text" placeholder="请说明被他人控制的实际情况（必填）" id="controlled" /></p>
+					</div>
+				</li>
+				<li>
+					<div class="select clearfix">
+						<span class="float-left">交易实际受益人</span>
+						<div class="float-right select-box">
+						<div class="icon">
+							    <div class="fruit" id="fruit2">
+							        <div class="apple">
+							            <label for="notBeneficiary" style="width:60px">非本人</label>
+							            <input type="radio" name="fruit2" id="notBeneficiary" class="input input3" value="0">
+							            <div class="user-defined">
+							                <span class="circle"></span>
+							            </div>
+							        </div>
+							        <div class="banana">
+							            <label for="beneficiary"  style="width:60px">本人</label>
+							            <input type="radio" name="fruit2" id="beneficiary" class="input input4" value="1">
+							        	<div class="user-defined">
+							                <span class="circle"></span>
+							            </div>
+							        </div>
+							    </div>
+						</div>
+						</div>
+					</div>
+					<div class="clearfix control">
+						<p class="kz">实际受益人</p>
+						<p class="inpu"><input type="text" placeholder="请说明交易实际受益人（必填）" id="actualBeneficiary"/></p>
+					</div>
+				</li>
+				<li>
+					<div class="select clearfix">
+						<span class="float-left">是否有不良信息记录</span>
+						<div class="float-right select-box">
+						<div class="icon">
+							    <div class="fruit" id="fruit3">
+							        <div class="apple">
+							            <label for="badInformation">是</label>
+							            <input type="radio" name="fruit3" id="badInformation" class="input input5"  value="1">
+							            <div class="user-defined">
+							                <span class="circle"></span>
+							            </div>
+							        </div>
+							        <div class="banana">
+							            <label for="noBadInformation">否</label>
+							            <input type="radio" name="fruit3" id="noBadInformation" class="input input6" value="0">
+							        	<div class="user-defined">
+							                <span class="circle"></span>
+							            </div>
+							        </div>
+							    </div>
+						</div>
+						</div>
+					</div>
+					<div class="clearfix control">
+						<p class="kz">不良信息记录</p>
+						<p class="inpu"><input type="text" placeholder="请说明不良信息记录（必填）" id="badCredit" /></p>
+					</div>
+				</li>
+			</ul>
+			<div class="agree clearfix">
+				<div class="">
+					    <div class="fruits">
+					        <div class="check">
+					            <label for="infoConfirm" class=text"">
+					            	本人保证提供的信息真实、准确、完整，知晓并确认若
+									提供的信息不真实、不准确、不完整的，应该依法承担
+									相应法律责任，且中原直销银行有权拒绝销售产品或提
+									供服务。本人已知晓并确认提供信息发生重要变化、可
+									能影响投资者分类的，应及时更新并告知中原直销银行。</label>
+					            <input type="checkbox" name="fruit2" class="selects" id="infoConfirm">
+					            <div class="user-defineds">
+					            </div>
+					        </div>
+					       
+					    </div>
+				</div>
+			</div>
+			
+			<div class="recharge-btn start-btn">
+				<button class="btn font-17-rem bg-ccc " disabled="disabled" type="button">确认</button>
+			</div>
+			</form>
+		</section>
+		<script>
+		/*单选效果*/
+		$(".input").click(function() {
+		    $(this).siblings("div").children("span").addClass("active");
+		    $(this).parents("div").siblings("div").find("span").removeClass("active");
+		});
+	
+		/*复选效果*/
+		$(".check").click(function(){
+		  	$(this).find("div").toggleClass("circles");// 检查每个元素中指定的类。如果不存在则添加类，如果已设置则删除之
+			if($('.selects').prop('checked')){
+				$('.selects').attr('datachecked',1);
+			}else{
+				$('.selects').attr('datachecked',0);
+			}
+			btnCheck($(this).parents('form'));
+		});
+
+		/*账户是否被他人实际控制选择是否*/
+		inputClick('#fruit input');
+		/*交易实际受益人选择是否*/
+		inputClick('#fruit2 input');
+		/*是否具有不良信息记录选择是否*/
+		inputClick('#fruit3 input');
+		/**
+		 * @param inputSelector  input单选框对象
+		 */
+		function inputClick(inputSelector) {
+			$(inputSelector).click(function () {
+				if($(this).parents('.fruit').find('.apple .input').prop('checked')){
+					$(this).parents('li').find('.control').show();
+					$(this).parents('li').find('.control input').focus();
+					$(this).parents('.fruit').find('.banana .input').attr('datachecked',0);
+				}else if($(this).parents('.fruit').find('.banana .input').prop('checked')){
+					$(this).parents('li').find('.control').hide();
+					$(this).parents('li').find('.control input').val('').attr('datachecked',0);
+					$(this).parents('.fruit').find('.banana .input').attr('datachecked',1);
+//					$(this).parents('.fruit').find('.apple .input').attr('datachecked',0);
+				}
+				btnCheck($(this).parents('form'));
+			});
+		}
+		/*账户是否被他人实际控制选择是否*/
+//		$('#fruit input').click(function(){
+////			var val=$('input:radio[name="fruit"]:checked').val();
+//			console.log($(this).parents('.fruit').find('.apple .input').prop('checked'));
+//			var	val=$(this).prop('checked');
+//			if($('.input1').prop('checked')){
+//				$(this).parents('li').find('.control').show();
+//				$('#controlled').focus();
+//				$('.input2').attr('datachecked',0);
+//				btnCheck($(this).parents('form'));
+//			}else if($('.input2').prop('checked')){
+//				$(this).parents('li').find('.control').hide();
+//				$('.input2').attr('datachecked',1);
+//				$('.input1').attr('datachecked',0);
+//				$('#controlled').val('');
+//				btnCheck($(this).parents('form'));
+//			}
+//		})
+
+		infoValidate('#controlled','请说明被他人控制的实际情况',2.5);
+		infoValidate('#actualBeneficiary','请说明交易实际受益人',2.5);
+		infoValidate('#badCredit','请说明不良信息记录',2.5);
+		/**
+		 *
+		 * @param inputTextSelector  input输入框对象
+		 * @param title  错误提示
+		 * @param time   消失时间
+		 */
+		function infoValidate(inputTextSelector,title,time) {
+			$(inputTextSelector).blur(function () {
+				setTimeout(function () {
+					/*加延时器是为了避免blur和click事件冲突，让blur后执行，默认情况下blur事件优先于click事件*/
+					if(!$(inputTextSelector).val() && $(inputTextSelector).parents('li').find('.apple .input').prop('checked')){
+						layer.open({
+							content:title,
+							time:time,
+							skin:'msg',
+						});
+					}
+					if($(inputTextSelector).val().length > 0 && $(inputTextSelector).parents('li').find('.apple .input').prop('checked')){
+//						$(inputTextSelector).parents('li').find('.apple .input').attr('datachecked',1);
+//						改为直接在input输入框上加flag
+						$(inputTextSelector).attr('datachecked',1);
+						$(inputTextSelector).parents('li').find('.banana .input').attr('datachecked',0);
+					}
+					btnCheck($(inputTextSelector).parents('form'));
+				},500);
+			}).focus(function () {
+				btnCheck($(inputTextSelector).parents('form'));
+				layer.closeAll();
+			});
+		}
+
+
+		/**
+		 * 表单输入验证，form中的input满足要求才能提交。
+		 * 在input中添加自定义属性datachecked,满足要求的输入下datachecked的length为4，
+		 * 这时才能提交
+		 * @param form
+		 */
+		function btnCheck(form) {
+			var btn = true;
+			if($("input[datachecked='1']").length != 4){
+				btn = false;
+			}
+			if (btn) {
+				form.find('.btn').removeClass('bg-ccc').addClass('bg-50a5fc').attr("disabled",false);
+			} else {
+				form.find('.btn').removeClass('bg-50a5fc').addClass('bg-ccc').attr("disabled",true);
+			}
+		}
+
+		$('.btn').click(function () {
+			if($("input[datachecked='1']").length != 4){
+				layer.open({
+					content:'您还有信息未确认',
+					time:2,
+					skin:'msg',
+				});
+				return false;
+			}
+
+			var qAnswers = {};
+			if($('input:radio[name="fruit"]:checked').val() == 1){
+				qAnswers['isActualControl'] = 1;
+				qAnswers['actualControlMsg'] = '';
+			}else{
+				qAnswers['isActualControl'] = 0;
+				qAnswers['actualControlMsg'] = $('#controlled').val();
+			}
+
+			if($('input:radio[name="fruit2"]:checked').val() == 1){
+				qAnswers['isBeneficiary'] = 1;
+				qAnswers['beneficiaryMsg'] = '';
+			}else{
+				qAnswers['isBeneficiary'] = 0;
+				qAnswers['beneficiaryMsg'] = $('#actualBeneficiary').val();
+			}
+
+			if($('input:radio[name="fruit3"]:checked').val() == 1){
+				qAnswers['haveBadRecord'] = 1;
+				qAnswers['badRecordMsg'] = $('#badCredit').val();
+			}else{
+				qAnswers['haveBadRecord'] = 0;
+				qAnswers['badRecordMsg'] = '';
+			}
+//			console.log('qAnswers',qAnswers);
+
+
+//			var resultArr = new Array();
+//			$("input[datachecked='1']").each(function (i) {
+//				var qAnswers = {};
+////				qAnswers['question'+ (i+1)] = $(this).parents('li').find('.float-left').text();
+//				if($(this).prop("type") == 'text'){
+//					qAnswers['answer'+(i+1)] = $(this).parents('li').find('.apple .input').val();
+//					qAnswers['additionalAnswe'+(i+1)] = $(this).val();
+//					resultArr.push(qAnswers);
+//				}else if($(this).prop("type") == 'radio'){
+//					qAnswers['answer'+(i+1)] = $(this).val();
+//					qAnswers['additionalAnswe'+(i+1)] = '';
+//					resultArr.push(qAnswers);
+//				}
+//			});
+//			var obj = {};
+//			jQuery.each(resultArr,function(k, v){
+//				jQuery.extend(obj, v);
+//			});
+
+//			console.log(obj);
+
+			$.ajax({
+				type:'post',
+				url:'',
+				data:qAnswers,
+				dataType:'json',
+				success:function (result) {
+					console.log(result);
+				}
+			});
+		});
+
+		</script>
+	</body>
+</html>

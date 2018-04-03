@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <title>转入结果</title>
+	    <link href="../css/common.css" rel="stylesheet"/>
+	  	<link href="../mxb-css/change-result.css" rel="stylesheet" />
+	  	<script src="../js/common.js"></script>
+	  	<script src="../js/jquery.min.js"></script>
+	</head>
+	<body>
+		<header class="wrap-header">
+			<img src="../img/back.png" class="float-left"/>
+			<p>转入结果</p>
+		</header>
+		<section class="wrap-container">
+			<div class="start-bg"><img src="../img/shenfen_chenggong.png"/></div>
+			<h3 class="text-center color-333 font-weight600">恭喜您！转入成功！</h3>
+			<div class="hint text-center color-333">预计<span>8月19日</span>开始计算收益</div>
+			<div class="recharge-btn start-btn1">
+				<button class="btn font-17-rem bg-50a5fc " disabled="disabled">余额自动转入</button>
+			</div>
+			<div class="recharge-btn start-btn2">
+				<button class="btn font-17-rem " disabled="disabled">查看我的账户</button>
+			</div>
+		</section>
+		<script>
+			$('ul li').on('click',function(){
+				var index=$(this).index("li");
+			    $('li img').each(function(){
+			    		$(this).css('display','none');
+			    })
+		       	$('li img').eq(index).css('display','block');
+			})
+		</script>
+	</body>
+</html>

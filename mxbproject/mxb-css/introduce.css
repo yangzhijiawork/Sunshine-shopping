@@ -1,0 +1,38 @@
+html,body{
+	background: #F2F2F2;
+}
+.introduce{
+	padding:0.2rem 0;
+}
+ul{
+	background: #fff;
+}
+ul li .introduce-title{
+	height: 0.88rem;
+	line-height: 0.88rem;
+	padding: 0 0.3rem;
+	border-bottom: 1px solid #e8e8e8;
+}
+.introduce-title p{
+	color: #333;
+	font-size: 0.3rem;
+}
+.introduce-title img{
+	width: 0.26rem;
+	margin-top: 0.3rem;
+}
+.introduce-content{
+	padding: 0.2rem 0.3rem;
+	text-align: left;
+	background: #f2f2f2;
+	line-height: 0.4rem;
+	font-size: 0.28rem;
+	color: #666;
+	display: none;
+}
+.introduce-title .color{
+	color: #50A5FC;
+}
+
+
+td{ border:1px solid #333; padding:0 .09rem; font-size:.24rem;}

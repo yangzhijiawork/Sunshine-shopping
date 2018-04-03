@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <title>转入结果</title>
+	    <link href="../css/common.css" rel="stylesheet"/>
+	  	<link href="../mxb-css/change-result.css" rel="stylesheet" />
+	  	<script src="../js/common.js"></script>
+	  	<script src="../js/jquery.min.js"></script>
+	</head>
+	<body>
+		<header class="wrap-header">
+			<img src="../img/back.png" class="float-left"/>
+			<p>转入结果</p>
+		</header>
+		<section class="wrap-container wrap">
+			<h4>投资者确认函</h4>
+			<p>尊敬的中原直销银行：</p>
+			<p class="cont"> 本人已仔细阅读贵司的《投资者类型及风险匹配告知书》，已充分知晓并理解贵司对本人的风险承受能力评估及产品、服务风险等级匹配结果。本人对该《投资者类型及风险匹配告知书》内容没有异议，愿意遵守法律、法规及贵司有关规定，通过贵司购买产品或者服务。本人承诺，将及时以书面方式如实地向贵司告知本人的重大信息变更。本确认函系本人独立、自主、真实的意思表示。特此确认。</p>
+		</section>
+		<section class="wrap-container wrap">
+			<h4>投资者风险匹配告知书</h4>
+			<p>尊敬的投资者：</p>
+			<p class="cont">根据您填写的投资者基本信息表，依据相关法律、法规的规定，我司将您认定为普通投资者。</p>
+			<p class="cont">结合您填写的风险测评问卷以及其他相关信息，我司对您的风险承受能力进行了综合评估。我司在此郑重提醒，我司向您销售的产品或提供的服务将以您的风险承受能力等级和投资品种、期限为基础，若您提供的信息发生任何重大变化，您应对及时以书面方式通知我司。我司建议您审慎评判自身风险承受能力、结合自身投资行为，做出审慎的投资判断。</p>
+		</section>
+		<script>
+			$('ul li').on('click',function(){
+				var index=$(this).index("li");
+			    $('li img').each(function(){
+			    		$(this).css('display','none');
+			    })
+		       	$('li img').eq(index).css('display','block');
+			})
+		</script>
+	</body>
+</html>

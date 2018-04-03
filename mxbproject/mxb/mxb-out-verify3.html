@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <title>转出</title>
+	    <link href="../css/common.css" rel="stylesheet"/>
+	  	<link href="../mxb-css/mxb-into.css" rel="stylesheet" />
+	  	<link href="../mxb-css/mxb-out.css" rel="stylesheet" />
+	  	<script src="../js/common.js"></script>
+	  	<script src="../js/jquery.min.js"></script>
+	</head>
+	<body>
+		
+		<header class="wrap-header">
+			<img src="../img/back.png" class="float-left"/>
+			<p>转出</p>
+		</header>
+		<section class="wrap-container text-center recharge">
+			<div class="into-num clearfix">
+				<p class="recharge-quota font-15-rem float-left">当前持有(元)：<span class="color-ff560c chiyou">28300.00</span></p>
+				<!--<button>充值</button>-->
+			</div>
+			<div class="recharge-num clearfix">
+				<p class="font-12-rem recharge-amount">转出份额(元)</p>
+				<span class="font-22-rem float-left">¥</span>
+				<input type="text" value="27000.00" placeholder="请输入您的转出份额" class="font-22-rem float-left" id="quota"/>
+				<span class="input-cancel"></span>
+			</div>
+			<p class="meony-msg">金额大写:&nbsp;&nbsp;<span class="font-weight600">贰万柒仟</span>&nbsp;&nbsp;元整</p>
+			<div class="recharge-way clearfix">
+				<p class="font-15-rem recharge-amount">转出方式&nbsp;&nbsp;&nbsp;<span class="font-12-rem color-999">(转出资金将打入您的账户)</span></p>
+				<div class="out-way-wrap clearfix">
+					<span class="out-way-input">
+						<input type="radio" name="radio" checked />
+						<span class="bg-icon-fast"></span>
+					</span>
+					<div class="out-way-txt border-bottom1">
+						<p class="font-weight600 ">快速到账</p>
+						<p class="color-999">预计两小时内到账，每日限额50万元</p>
+					</div>
+				</div>
+				<div class="out-way-wrap clearfix">
+					<span class="out-way-input">
+						<input type="radio" name="radio" />
+						<span class="bg-icon-normal"></span>
+					</span>
+					<div class="out-way-txt">
+						<p class="font-weight600 ">普通到账</p>
+						<p class="color-999">15点前转出下一基金交易日到账（含当日收益）：15点后转出第三个基金交易日到账</p>
+					</div>
+				</div>
+				
+			</div>
+			<div class="recharge-btn">
+				<button class="btn font-17-rem bg-50a5fc" >下一步</button>
+			</div>
+		</section>
+		<!--密码键盘开始-->
+		<div class="keyset">
+			<div class="keyboard-cover fixed"></div>
+			<div class="password">
+				<span class="font-40-rem password-cancel">×</span>
+				<p class="font-15-rem password-title color-ff560c">验证码错误，请重新输入</span></p>
+				<ul class="password-input clearfix">
+					<li class="verify-poitn"></li>
+					<li class="verify-poitn"></li>
+					<li class="verify-poitn"></li>
+					<li class="verify-poitn"></li>
+					<li class="verify-poitn"></li>
+					<li class="verify-poitn"></li>
+				</ul>
+				<p class="color-50a5fc font-12-rem float-right password-resend">重新发送</p>
+			</div>
+			<div class="keyboard font-29-rem fixed">
+			    <div class="line-key">
+			        <div class="num">
+			            <div class="center data">1</div>
+			        </div>
+			        <div class="num">
+			            <div class="data">2</div>
+			            <span>ABC</span>
+			        </div>
+			        <div class="num">
+			            <div class="data">3</div>
+			            <span>DEF</span>
+			        </div>
+			    </div>
+			    <div class="line-key">
+			        <div class="num">
+			            <div class="data">4</div>
+			            <span>GHI</span>
+			        </div>
+			        <div class="num">
+			            <div class="data">5</div>
+			            <span>JKL</span>
+			        </div>
+			        <div class="num">
+			            <div class="data">6</div>
+			            <span>MNO</span>
+			        </div>
+			    </div>
+			    <div class="line-key">
+			        <div class="num">
+			            <div class="data">7</div>
+			            <span>PQRS</span>
+			        </div>
+			        <div class="num">
+			            <div class="data">8</div>
+			            <span>TUV</span>
+			        </div>
+			        <div class="num">
+			            <div class="data">9</div>
+			            <span>WXYZ</span>
+			        </div>
+			    </div>
+			    <div class="line-key">
+			        <div class="greyBac"></div>
+			        <div class="num">
+			            <div class="center data">0</div>
+			        </div>
+			        <div class="greyBac" id="greyBac">
+			            <div class="center"><img src="../img/delete.png"/></div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+		<!--密码键盘结束-->
+		
+		<script>
+			
+			/*转出份额与持有份额比较*/
+			function compare_num(){
+				if ($("#quota").val() > Number($(".chiyou").html())) {
+					$(".error-msg").css('display','block'); //转出大于持有，显示错误提示
+				} else{
+					$(".error-msg").css('display','none'); //转出小于等于持有，隐藏错误提示
+				}
+			}
+			
+ 			/*转出方式单选按钮*/
+			$("input[name='radio']").click(function() {
+				/*var	val=$(this).prop('checked');
+				alert(val)*/
+				$(this).siblings("span").removeClass("bg-icon-normal").addClass("bg-icon-fast");
+			    $(this).parents(".out-way-wrap").siblings('.out-way-wrap').children(".out-way-input").find('span').addClass("bg-icon-normal").removeClass("bg-icon-fast");
+			});
+			
+			
+			/*输入验证码*/
+			var liNum = $(".password ul li")
+			$(".keyboard").on('click','.num',function () {
+				var i = $(".password ul li.verify-poitn").length;
+				if (i <=(liNum.length-1)) {
+					liNum[i].id = $(this).find('.data').html();
+					liNum[i].className = 'verify-poitn';
+				}
+				i++;
+			})
+			/*删除验证码*/
+			$(".keyboard").on('click','#greyBac',function () {
+				var j = $(".password ul li.verify-poitn").length;
+				if (j >= 1) {
+					liNum[j-1].id = '';
+					liNum[j-1].className = '';
+				}
+				j--;
+			})
+		</script>
+	</body>
+</html>

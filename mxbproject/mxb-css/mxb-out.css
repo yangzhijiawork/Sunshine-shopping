@@ -1,0 +1,49 @@
+.out-way-wrap {
+	padding-top: .36rem;
+	padding-right: .3rem;
+}
+
+.out-way-wrap .out-way-input {
+	display: inline-block;
+	float: left;
+	width: .5rem;
+	position: relative;
+}
+
+.out-way-wrap .out-way-input input[name='radio'] {
+	width: .36rem;
+	height: .36rem;
+	opacity: 0;
+	z-index: 3;
+}
+
+.out-way-wrap .out-way-input span {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: .36rem;
+	height: .36rem;
+	z-index: 2;
+}
+
+.out-way-wrap .out-way-input .bg-icon-fast{
+	background: url(../img/out_way_fast.png) no-repeat center;
+	background-size: contain;
+}
+.out-way-wrap .out-way-input .bg-icon-normal{
+	background: url(../img/out_way_normal.png) no-repeat center;
+	background-size: contain;
+}
+.border-bottom1 {
+	border-bottom: 1px solid #ddd;
+}
+
+.out-way-wrap .out-way-txt {
+	margin-left: .5rem;
+	padding-bottom: .3rem;
+}
+
+.out-way-txt p:first-child {
+	margin-bottom: .15rem;
+}
+.password-resend{ background: none;}

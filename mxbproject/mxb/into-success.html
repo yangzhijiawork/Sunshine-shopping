@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <title>转入结果</title>
+	    <link href="../css/common.css" rel="stylesheet"/>
+	  	<link href="../mxb-css/change-result.css" rel="stylesheet" />
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/layer.js"></script>
+	  	<script src="../js/common.js"></script>
+	</head>
+	<body>
+		<header class="wrap-header">
+            <a href="javascript:history.go(-1)"><img src="../img/back.png" class="float-left"/></a>
+			<p>转入结果</p>
+		</header>
+		<section class="wrap-container">
+			<div class="start-bg"><img src="../img/shenfen_chenggong.png"/></div>
+			<h3 class="text-center color-333 font-weight600">恭喜您！转入成功！</h3>
+			<div class="hint text-center color-333">预计<span>8月19日</span>开始计算收益</div>
+			<div class="recharge-btn start-btn1">
+				<button class="btn font-17-rem bg-50a5fc " type="button">余额自动转入</button>
+			</div>
+			<div class="recharge-btn start-btn2">
+				<button class="btn font-17-rem " type="button" onclick="loaction.href='#'">查看我的账户</button>
+			</div>
+		</section>
+		<script>
+				$('.start-btn1 .btn').click(function () {
+				    // 余额自动转入
+				    $.ajax({
+                        type:'post',
+//						url:'http://localhost:8080/fop-web/mxbtransaction/mxbProductCustomer.do',
+                        data:'',
+                        dataType:'json',
+                        success:function (result) {
+                            console.log(result);
+                            layer.open({
+                                type:1,
+                                content: '<div class="success-toast"><img src="../img/save-success.png"/><span class="font-15-rem color-fff">保存成功</span></div>',
+                                skin: 'msg',
+                                anim: false,
+                                time: 2.5 //2.5秒后自动关闭
+                            });
+                            setTimeout(function () {
+                                location.href = 'mxb-index.html';
+                            },2700);
+                        }
+                    });
+
+				});
+
+            $(function () {
+                //预计xx日开始计算收益
+                $.ajax({
+                    type:'post',
+//						url:'http://localhost:8080/fop-web/mxbtransaction/mxbProductCustomer.do',
+                    data:'',
+                    dataType:'json',
+                    success:function (result) {
+                        console.log(result);
+                        // 修改日期
+                        $('.hint').children('span').text();
+                    }
+                });
+            });
+		</script>
+	</body>
+</html>

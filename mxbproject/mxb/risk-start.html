@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <title>风险评估</title>
+	    <link href="../css/common.css" rel="stylesheet"/>
+	  	<link href="../mxb-css/risk.css" rel="stylesheet" />
+	  	<script src="../js/common.js"></script>
+	  	<script src="../js/jquery.min.js"></script>
+	</head>
+	<body>
+		<header class="wrap-header">
+			<a href="javascript:history.go(-1)"><img src="../img/back.png" class="float-left"/></a>
+			<p>风险评估</p>
+		</header>
+		<section class="wrap-container text-center risk">
+			<div class="start-bg"><img src="../img/rick-start.png"/></div>
+			<div class="hint text-center">投资前请先进行风险评测哦！</div>
+			<button class="btn bg-50a5fc color-fff start-btn" type="button">开始测评</button>
+		</section>
+		<script>
+			$('.start-btn').on('click',function(){
+				location.href = 'risk-one.html';
+			})
+		</script>
+	</body>
+</html>

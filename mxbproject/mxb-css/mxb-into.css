@@ -1,0 +1,225 @@
+html,
+body {
+	background: #F2F2F2;
+}
+
+.into-num {
+	background: #fff;
+	padding: 0 0.3rem;
+	/*margin-bottom: 0.2rem;*/
+}
+
+.into-num button {
+	float: right;
+	width: 1.2rem;
+	line-height: 0.5rem;
+	border: 1px solid #50A5FC;
+	border-radius: 0.5rem;
+	background: #fff;
+	color: #50A5FC;
+	margin-top: 0.19rem;
+	font-size: 0.24rem;
+}
+
+.recharge .recharge-quota {
+	height: 0.88rem;
+	line-height: 0.88rem;
+	text-align: left;
+}
+
+.recharge .recharge-title {
+	height: 0.88rem;
+	line-height: 0.88rem;
+	padding-left: 0.3rem;
+	text-align: left;
+}
+
+.recharge .recharge-card {
+	height: 0.88rem;
+	line-height: 0.88rem;
+	background: #fff;
+	margin-bottom: 0.2rem;
+}
+
+.recharge .recharge-card {
+	padding: 0 0.3rem;
+}
+
+.recharge .recharge-card img {
+	width: 0.3rem;
+	margin-top: 0.29rem;
+}
+
+.recharge .recharge-num,.recharge-way {
+	text-align: left;
+	/*padding: 0.24rem 0 0.06rem 0.3rem;*/
+	padding: 0.24rem 0.3rem 0.06rem;
+	background: #fff;
+	
+	margin-top: 0.2rem;
+}
+
+.recharge .recharge-amount {
+	text-align: left;
+	background: #fff;
+}
+
+.recharge-num span {
+	line-height: 1rem;
+	height: 1rem;
+}
+
+.recharge-num input {
+	line-height: 0.68rem;
+	height: 1rem;
+	width: 5.5rem;
+	padding-left: 0.2rem;
+}
+
+.recharge-btn {
+	padding-top: 0.68rem;
+}
+
+.error-msg {
+	/*margin: 0.3rem 0 0 0.3rem;*/
+	margin: .24rem 0 0 .3rem;
+	line-height: 0.24rem;
+	height: 0.24rem;
+	font-size: 0.24rem;
+	/*color: #ff560c;*/
+	text-align: left;
+}
+.meony-msg{
+	margin: .24rem 0 0 .3rem;
+	line-height: 0.24rem;
+	height: 0.24rem;
+	font-size: 0.24rem;
+	color: #333;
+	text-align: left;
+}
+
+.input-cancel{
+	width: .36rem;
+    background: url(../img/cancel@2x.png) no-repeat center;
+    float: right;
+    background-size: contain;
+}
+
+
+/**
+ * 
+ * mxb-selfinto1.CSS  Begin
+ * 
+ */
+
+.into-num input {
+	margin-top: .13rem;
+}
+
+
+/*.mxb-switch {
+	width: 52px;
+	height: 31px;
+	position: relative;
+	border: 1px solid #dfdfdf;
+	background-color: #fdfdfd;
+	box-shadow: #dfdfdf 0 0 0 0 inset;
+	border-radius: 20px;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+	background-clip: content-box;
+	display: inline-block;
+	-webkit-appearance: none;
+	user-select: none;
+	outline: none;
+}
+
+.mxb-switch:before {
+	content: '';
+	width: 29px;
+	height: 29px;
+	position: absolute;
+	top: 0px;
+	left: 0;
+	border-radius: 20px;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+	background-color: #fff;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}*/
+
+.mxb-switch {
+	width: 1.02rem;
+	height: .62rem;
+	position: relative;
+	border: 1px solid #dfdfdf;
+	background-color: #fdfdfd;
+	box-shadow: #dfdfdf 0 0 0 0 inset;
+	border-radius: .34rem;
+	border-top-left-radius: .34rem;
+	border-top-right-radius: .34rem;
+	border-bottom-left-radius: .34rem;
+	border-bottom-right-radius: .34rem;
+	background-clip: content-box;
+	display: inline-block;
+	-webkit-appearance: none;
+	user-select: none;
+	outline: none;
+}
+
+.mxb-switch:before {
+	content: '';
+	width: .56rem;
+	height: .56rem;
+	position: absolute;
+	top: 0px;
+	left: 0;
+	border-radius: .3rem;
+	border-top-left-radius: .3rem;
+	border-top-right-radius: .3rem;
+	border-bottom-left-radius: .3rem;
+	border-bottom-right-radius: .3rem;
+	background-color: #fff;
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+}
+
+.mxb-switch:checked {
+	border-color: #53d76a;
+	box-shadow: #53d76a 0 0 0 16px inset;
+	background-color: #53d76a;
+}
+
+.mxb-switch:checked:before {
+	/*left: 21px;*/
+	left: .41rem;
+}
+
+.mxb-switch.mxb-switch-animbg {
+	transition: background-color ease 0.4s;
+}
+
+.mxb-switch.mxb-switch-animbg:before {
+	transition: left 0.3s;
+}
+
+.mxb-switch.mxb-switch-animbg:checked {
+	box-shadow: #dfdfdf 0 0 0 0 inset;
+	background-color: #53d76a;
+	transition: border-color 0.4s, background-color ease 0.4s;
+}
+
+.mxb-switch.mxb-switch-animbg:checked:before {
+	transition: left 0.3s;
+}
+.password-resend{ background: none;}
+.prompt-info{
+	font-size: .24rem;
+	height:.88rem;
+	line-height:.88rem;
+	text-indent: .30rem;
+	color:#9f9f9f;
+}

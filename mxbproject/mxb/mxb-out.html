@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <title>转出</title>
+	    <link href="../css/common.css" rel="stylesheet"/>
+	  	<link href="../mxb-css/mxb-into.css" rel="stylesheet" />
+	  	<link href="../mxb-css/mxb-out.css" rel="stylesheet" />
+	  	<script src="../js/common.js"></script>
+	  	<script src="../js/jquery.min.js"></script>
+		<script src="../js/layer.js"></script>
+		<script src="../js/fastclick.js"></script>
+	</head>
+	<body>
+		
+		<header class="wrap-header">
+			<a href="javascript:history.go(-1)"><img src="../img/back.png" class="float-left"/></a>
+			<p>转出</p>
+		</header>
+		<section class="wrap-container text-center recharge">
+			<div class="into-num clearfix">
+				<p class="recharge-quota font-15-rem float-left">当前持有(元)：<span class="color-ff560c chiyou">0.00</span></p>
+				<!--<button>充值</button>-->
+			</div>
+			<div class="recharge-num clearfix">
+				<p class="font-12-rem recharge-amount">转出份额(元)</p>
+				<span class="font-22-rem float-left">¥</span>
+				<input type="text"  placeholder="请输入您的转出份额" class="font-22-rem float-left" id="quota" maxlength="13"/>
+				<span class="input-cancel"></span>
+			</div>
+			<p class="error-msg" style="display: none;"></p>
+			<div class="recharge-way clearfix">
+				<p class="font-15-rem recharge-amount">转出方式&nbsp;&nbsp;&nbsp;<span class="font-12-rem color-999">(转出资金将打入您的账户)</span></p>
+				<div class="out-way-wrap clearfix">
+					<span class="out-way-input">
+						<input type="radio" name="radio" checked id="bg-icon-fast" value="1"/>
+						<span class="bg-icon-fast"></span>
+					</span>
+					<label for="bg-icon-fast">
+						<div class="out-way-txt border-bottom1">
+							<p class="font-weight600 ">快速到账</p>
+							<p class="color-999">预计两小时内到账，每日限额50万元</p>
+						</div>
+					</label>
+				</div>
+				<div class="out-way-wrap clearfix">
+					<span class="out-way-input">
+						<input type="radio" name="radio" id="bg-icon-normal" value="0"/>
+						<span class="bg-icon-normal"></span>
+					</span>
+					<label for="bg-icon-normal">
+						<div class="out-way-txt">
+							<p class="font-weight600 ">普通到账</p>
+							<p class="color-999">15点前转出下一基金交易日到账（含当日收益）：15点后转出第三个基金交易日到账</p>
+						</div>
+					</label>
+				</div>
+				
+			</div>
+			<div class="recharge-btn">
+				<button class="btn font-17-rem bg-ccc"  id="btn" disabled="disabled" type="button" onclick="goNext()">转出</button>
+			</div>
+		</section>
+		<div class="keyset" style="display:none;">
+			<!--遮罩层-->
+			<div class="keyboard-cover fixed"></div>
+			<div class="password">
+				<span class="font-40-rem password-cancel">×</span>
+				<p class="font-15-rem password-title">验证码已发送至<span class="color-ff560c">138****8888</span></p>
+				<ul class="password-input clearfix">
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+				<button class="color-666 font-12-rem float-right password-resend">60秒后重新获取</button>
+			</div>
+			<div class="keyboard font-29-rem fixed">
+			    <div class="line-key">
+			        <div class="num">
+			            <div class="center data">1</div>
+			        </div>
+			        <div class="num">
+			            <div class="data">2</div>
+			            <span>ABC</span>
+			        </div>
+			        <div class="num">
+			            <div class="data">3</div>
+			            <span>DEF</span>
+			        </div>
+			    </div>
+			    <div class="line-key">
+			        <div class="num">
+			            <div class="data">4</div>
+			            <span>GHI</span>
+			        </div>
+			        <div class="num">
+			            <div class="data">5</div>
+			            <span>JKL</span>
+			        </div>
+			        <div class="num">
+			            <div class="data">6</div>
+			            <span>MNO</span>
+			        </div>
+			    </div>
+			    <div class="line-key">
+			        <div class="num">
+			            <div class="data">7</div>
+			            <span>PQRS</span>
+			        </div>
+			        <div class="num">
+			            <div class="data">8</div>
+			            <span>TUV</span>
+			        </div>
+			        <div class="num">
+			            <div class="data">9</div>
+			            <span>WXYZ</span>
+			        </div>
+			    </div>
+			    <div class="line-key">
+			        <div class="greyBac"></div>
+			        <div class="num">
+			            <div class="center data">0</div>
+			        </div>
+			        <div class="greyBac" id="greyBac">
+			            <div class="center"><img src="../img/delete.png"/></div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+		<script>
+			// 密码键盘
+			$('.keyset').hide();
+
+			$(function() {
+				FastClick.attach(document.body);
+				// todo
+				// 1. 判断当前持有x元
+				 $.ajax({
+					type:'post',
+					url:'http://localhost:8080/fop-web/mxbtransaction/mxbUserInfo.do',
+					async:false,
+					data:{
+						fundCode:201709,
+					},
+					dataType:'json',
+					success:function(data){
+						var phoneNo = data.phoneNo;
+						$('.password .password-title').attr('dataphone',phoneNo);
+						phoneNo =phoneNo.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+						$('.password .password-title .color-ff560c').text(phoneNo);
+						var data = data.availableBal;
+						if(data.errorCode == '000000'){
+							// 总份额
+							$('.chiyou').text(fmoney(data.total_vol));
+						}else{
+							var error = (data.errorCode === '999999')?'系统异常，请稍后再试！':data.errorMsg;
+							layer.open({
+								content:error,
+								time:2,
+								skin:'msg',
+							});
+						}
+					},
+					error:function(){
+						layer.open({
+							content:'连接超时,请刷新页面重试',
+							time:2,
+							skin:'msg',
+						});
+					}
+				}); 
+				// 2. 转出是否有限额
+
+				// 输入框上的删除键
+					$('.input-cancel').click(function () {
+						$('#quota').val('');
+						$('.error-msg').hide().text('');
+						isAdd2();
+					});
+
+		 			/*转出方式单选按钮切换*/
+					$("input[name='radio']").click(function() {
+						/*var	val=$(this).prop('checked');*/
+						$(this).siblings("span").removeClass("bg-icon-normal").addClass("bg-icon-fast");
+					    $(this).parents(".out-way-wrap").siblings('.out-way-wrap').children(".out-way-input").find('span').removeClass("bg-icon-fast").addClass("bg-icon-normal");
+					});
+
+					//重新发送验证码
+					$('.password-resend').on('click',function(){
+						var phoneNo = $('.password .password-title').attr('dataphone');
+						phoneNo =phoneNo.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+						$('.password .password-title .color-ff560c').text(phoneNo);
+						getTime();
+					});
+
+					// 关闭遮罩层
+					$('.password-cancel').on('click',function(){
+						$('.keyset').hide();
+						// 移除class='verify-poitn' 这样在进入时才能清除密码
+						$('.password-input li').each(function(){
+							$(this).removeClass('verify-poitn').removeAttr("id");
+						});
+						clearInterval(timer);
+					});
+
+					$("#quota").bind("change",function(){
+						changeMon();
+					});
+				
+				//金额oninput事件
+					$('#quota').bind('input propertychange', function() {
+						var maxOutMoney = Number(replaceAll($(".chiyou").html()));
+						checkInput(true,maxOutMoney);
+					});
+			});
+			
+			//下一步
+			var goNext = function(){
+				$('.password-input li').each(function(){
+					$(this).removeClass('verify-poitn').removeAttr("id");
+					$(this).text('');
+				});
+				$('.keyset').show();
+				// 关闭弹窗清除定时器时，$('.password-resend').text()是清除定时器的时间。
+				// 再进入该页面就会从停止时的时间跳到59秒。故加入下一行代码
+				$('.password-resend').text('60秒后重新获取');
+				// 60秒短信倒计时
+				getTime();
+			};
+
+			/*输入验证码*/
+			var liNum = $(".password ul li");
+			var verifi = [];
+			$(".line-key .num").on('click',function () {
+				var i = $(".password ul li.verify-poitn").length;
+				if (i <=(liNum.length-1)) {
+					liNum[i].id = $(this).find('.data').html();
+					liNum[i].className = 'verify-poitn';
+					verifi.push(liNum[i].id);
+				}
+				i++;
+				if(i == 6){
+					verifi = verifi.join('');
+					var type = $("input[name='radio']:checked").val()
+					setTimeout(function () {
+						sentRedemption(type,verifi);
+					},500);
+				}
+			}).on('touchstart',function() {
+				$(this).css("background-color", "grey");
+			}).on('touchend',function() {
+				$(this).css("background-color", "#fff");
+			});
+			
+			/*删除验证码*/
+			$(".keyboard").on('click','#greyBac',function () {
+				var j = $(".password ul li.verify-poitn").length;
+				if (j >= 1) {
+					liNum[j-1].id = '';
+					liNum[j-1].className = '';
+					verifi.pop(); // 删除验证码数组
+				}
+				j--;
+			});
+			
+
+			/**
+			 *
+			 * @param flag
+			 * @param maxNum 最大可转出金额
+			 */
+			function checkInput(flag,maxNum) {
+				$('.error-msg').hide();
+				var money =$('#quota').val();
+				if(checkMoney(money) && parseFloat(money)>0)  // 输入金额格式正确，并且大于零时//jacket add parseFloat
+				{
+					if(flag){
+						/*转出份额与持有份额比较*/
+						if(parseFloat(money)>parseFloat(maxNum)){
+							isAdd2();
+							$('.error-msg').show().text('转出份额超过您的持有份额');
+							return;
+						}
+					}
+					isAdd1();
+					$('#quota').val(money);
+					var dx = DX(money);
+					$('.error-msg').show().text('金额大写：'+dx);
+				}else{
+					if(isNaN(Number(money))  || parseFloat(money) <= 0){
+						isAdd2();
+						$('.error-msg').show().text('请输入正确的金额');
+					}else{
+						if(money.length!=0){
+							var amount = money.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');
+							if(flag){
+								if(parseFloat(money)>parseFloat(maxNum)){
+									isAdd2();
+									$('.error-msg').show().text('超过最大可转出金额');
+									return;
+								}
+							}
+							isAdd1();
+							$('#quota').val(amount);
+							var dx1 = DX(amount);
+							$('.error-msg').show().text('金额大写：'+dx1);
+						}else{
+							isAdd2();
+							$('.error-msg').show().text('');
+						}
+					}
+				}
+			}
+
+			//短信60秒封装
+			function getTime(){
+			/* 	$('.password-title').html('验证码已发送至<span class="color-ff560c">${phoneNo }</span>'); */
+				$('.password-resend').attr('disabled','disabled');
+				valideCode();
+				var countdown = 59;
+				timer=setInterval(function (){
+					if (countdown == 0) {
+						clearInterval(timer);
+						$('.password-resend').removeAttr('disabled');
+						$('.password-resend').text('点击发送');
+						$('.password-resend').css('color','#50a5fc');
+						countdown = 59;
+						return;
+					} else {
+						$('.password-resend').attr('disabled','disabled');
+						$('.password-resend').text(countdown + '秒后重新获取')
+						$('.password-resend').css('color','#666');
+						countdown--;
+					};
+					//循环60次
+				} , 1000);
+			}
+
+			// 发送短信
+			function valideCode() {
+				var url = "<%=request.getContextPath()%>/accountOpen/valideCode.do";
+				$.post(url, {
+					verCodeType:"O"
+				}, function(data){
+					console.log('短信',data);
+					data = JSON.parse(data);
+					if(data.errorCode ==="000000"){
+						layer.open({
+							content:'发送成功',
+							time:2,
+							skin:'msg',
+						});
+					}else{
+						var error = (data.errorCode === '999999')?'系统异常，请稍后再试！':data.errorMsg;
+						layer.open({
+							content:error,
+							time:2,
+							skin:'msg',
+						});
+					}
+				}).error(function(){
+					layer.open({
+						content:'连接超时',
+						time:2,
+						skin:'msg',
+					});
+				});
+			}
+
+			/**
+			 * 发送赎回请求
+			 * @param type  赎回方式
+			 * @param code  验证码
+			 */
+			function sentRedemption(type,code) {
+				var url =  "http://localhost:8080/fop-web/mxbtransaction/mxbRedeemJournal.do";
+				$.post(url, {
+					applicationVol:replaceAll($('#quota').val()), // 赎回份数
+					phone:$('.password .password-title .color-ff560c').attr('dataphone'),
+					fundCode :'201709',
+					verCode:code,
+					verInd:'Y', // 验证标志
+					verCodeType:'I', // 验证码类型
+					type:type    // 赎回方式
+				}, function(data){
+					if (data.errorCode == "000000" || data.errorCode == "200099") {
+						/*密码键盘消失*/
+						$('.keyset').hide();
+						var transferType = $("input[name='radio']:checked").val();
+					    window.location.href='out-success.html?transferType='+transferType;
+					} else if(data.errorCode == "200034" || data.errorCode == "200035"){
+						$('.password-title').html('<span class="color-ff560c">'+data.errorMsg+'</span>');
+						// 移除class='verify-poitn' 
+						$('.password-input li').each(function(){
+							$(this).removeClass('verify-poitn').removeAttr("id");
+							$(this).text('');
+						});
+					}else {
+						var error = (data.errorCode === '999999') ? '系统异常，请稍后再试！':data.errorMsg;
+						/*密码键盘消失*/
+						$('.keyset').hide();
+					  	window.location.href='out-fail.html?errorMsg='+error;
+					}
+				}).error(function(){
+					$('.keyset').hide();
+					layer.open({
+						content:'连接超时',
+						time:2,
+						skin:'msg',
+					});
+				});
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,27 @@
+.start-bg img{ 
+	display: block;
+	width: 6.39rem;
+	height:3.15rem;
+	margin:2.7rem auto 0 auto;}
+.wrap-container h3{
+	 font-size: .36rem;
+	 margin-top:.4rem;
+	 margin-bottom:.2rem;
+}
+.hint{ font-size: 0.28rem;
+    }	
+.hint span{ color:#ff560c;}		
+.start-btn1{ margin-top:1.78rem;
+	margin-bottom: .3rem;}
+.start-btn2 button{
+	background: none;
+	color:#50a5fc;
+	border:2px solid #50a5fc;
+	border-radius:.4rem;
+}
+
+
+/*确认函*/
+.wrap h4{ margin:.15rem 0;}
+.wrap p{ margin-bottom:.15rem;}
+.wrap p.cont{ text-indent: 24px;}

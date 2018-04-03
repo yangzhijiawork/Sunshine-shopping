@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <title>转入</title>
+	    <link href="../css/common.css" rel="stylesheet"/>
+	  	<link href="../mxb-css/mxb-into.css" rel="stylesheet" />
+	  	<script src="../js/common.js"></script>
+	  	<script src="../js/jquery.min.js"></script>
+		<script src="../js/layer.js"></script>
+		<script src="../js/fastclick.js"></script>
+	</head>
+	<body>
+		<!-- 
+			初始化：获取客户默认银行卡
+			1.发送验证码接口
+			2.验证验证码接口
+			3.获取客户所有绑定的银行卡
+		-->
+		<header class="wrap-header">
+			<a href="javascript:history.go(-1)"><img src="../img/back.png" class="float-left"/></a>
+			<p>转入</p>
+		</header>
+		<section class="wrap-container text-center recharge">
+			<div class="prompt-info text-left" style="display:none;">本产品最多可持有<span>50</span>万元，您还可以转入<span>35</span>万元</div>
+			<div class="into-num clearfix">
+				<p class="recharge-quota font-15-rem float-left">可用余额：<span class="color-ff560c chiyou">0.00</span>元</p>
+				<button>充值</button>
+			</div>
+			<div class="recharge-num clearfix">
+				<p class="font-12-rem recharge-amount">转入金额(元)</p>
+				<span class="font-22-rem float-left">¥</span>
+				<input type="text" placeholder="建议转入1000元以上的金额" class="font-22-rem float-left" id="quota" maxlength="13"/>
+				<span class="input-cancel"></span>
+			</div>
+			<p class="error-msg"></p>
+			<div class="recharge-btn">
+				<button class="btn font-17-rem bg-ccc"  id="btn" disabled="disabled" type="button" onclick="goNext()">转入</button>
+			</div>
+		</section>
+		<div class="keyset" style="display:none;">
+			<div class="keyboard-cover fixed"></div>
+			<div class="password">
+				<span class="font-40-rem password-cancel">×</span>
+				<p class="font-15-rem password-title">验证码已发送至<span class="color-ff560c">138****8888</span></p>
+				<ul class="password-input clearfix">
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+				<button class="color-666 font-12-rem float-right password-resend">60秒后重新获取</button>
+			</div>
+			<div class="keyboard font-29-rem fixed">
+			    <div class="line-key">
+			        <div class="num">
+			            <div class="center data">1</div>
+			        </div>
+			        <div class="num">
+			            <div class="data">2</div>
+			            <span>ABC</span>
+			        </div>
+			        <div class="num">
+			            <div class="data">3</div>
+			            <span>DEF</span>
+			        </div>
+			    </div>
+			    <div class="line-key">
+			        <div class="num">
+			            <div class="data">4</div>
+			            <span>GHI</span>
+			        </div>
+			        <div class="num">
+			            <div class="data">5</div>
+			            <span>JKL</span>
+			        </div>
+			        <div class="num">
+			            <div class="data">6</div>
+			            <span>MNO</span>
+			        </div>
+			    </div>
+			    <div class="line-key">
+			        <div class="num">
+			            <div class="data">7</div>
+			            <span>PQRS</span>
+			        </div>
+			        <div class="num">
+			            <div class="data">8</div>
+			            <span>TUV</span>
+			        </div>
+			        <div class="num">
+			            <div class="data">9</div>
+			            <span>WXYZ</span>
+			        </div>
+			    </div>
+			    <div class="line-key">
+			        <div class="greyBac"></div>
+			        <div class="num">
+			            <div class="center data">0</div>
+			        </div>
+			        <div class="greyBac" id="greyBac">
+			            <div class="center"><img src="../img/delete.png"/></div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+		<script>
+			var remainMoney = getQueryString('remainMoney');
+			if(remainMoney > 0){
+				var totalInLimit = getQueryString('totalInLimit');
+				$('.prompt-info span:first-child').text(totalInLimit);
+				$('.prompt-info span:last-child').text(remainMoney);
+				$('.prompt-info').show();
+			}
+			// 明天
+			var today = new Date();
+			today.setTime(today.getTime()+24*60*60*1000);
+			var tomorrow = (today.getMonth()+1) + "月" + today.getDate()+'日';
+			//初始化
+			$('.error-msg').html('现在转入，预计<span class="color-ff560c">'+tomorrow+'</span>开始计算收益');
+			//密码键盘
+			$('.keyset').hide();
+//			//下一步
+//			var goNext = function(){
+//				$('.keyset').show();
+//			};
+//			//输入验证码
+//			var count=0;
+//			var passArr=[];
+//			$(".num").on("click", function () {
+//		        var index=$(this).index(".num");
+//		        var pass=$('.data').eq(index).text();
+//		        $('.password-input li').eq(count).text(pass);
+//		        count++;
+//				if(count >6){
+//					count=6;
+//				}else{
+//					passArr.push(pass);
+//				}
+//		    });
+//		    //删除验证码
+//		    $("#greyBac").on("click", function () {
+//		       $('.password-input li').eq(count-1).text('');
+//		        count--;
+//		        if(count<0){
+//		        		count=0
+//		        }else{
+//		        		passArr.pop();
+//		        }
+//		    });
+//		    $('.password-cancel').on('click',function(){
+//		    		$('.keyset').hide();
+//		    });
+//
+//		     $("#quota").bind("change",function(){
+//			 	changeMon();
+//			 });
+//		    //金额oninput事件
+//		    $('#quota').bind('input propertychange', function() {
+//			    changeBtn(true,288);
+//			});
+
+			$(function() {
+				FastClick.attach(document.body);
+				// todo
+				// 1. 判断当前持有x元
+				var totalVol;
+				 $.ajax({
+					type:'post',
+					url:'http://localhost:8080/fop-web/mxbtransaction/availableBal.do',
+					async:false,
+					dataType:'json',
+					success:function(data){
+						var phoneNo = data.phoneNo;
+						$('.password .password-title').attr('dataphone',phoneNo);
+						phoneNo =phoneNo.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+						$('.password .password-title .color-ff560c').text(phoneNo);
+						var data = data.availableBal;
+						if(data.errorCode == '000000'){
+							// 总份额
+							totalVol = data.availableBal;
+							$('.chiyou').text(fmoney(totalVol));
+						}else{
+							var error = (data.errorCode === '999999')?'系统异常，请稍后再试！':data.errorMsg;
+							layer.open({
+								content:error,
+								time:2,
+								skin:'msg',
+							});
+						}
+					},
+					error:function(){
+						layer.open({
+							content:'连接超时,请刷新页面重试',
+							time:2,
+							skin:'msg',
+						});
+					}
+				}); 
+				// 2. 转出是否有限额
+
+			// 输入框上的删除键
+			$('.input-cancel').click(function () {
+				$('#quota').val('');
+				$('.error-msg').html('现在转入，预计<span class="color-ff560c">'+tomorrow+'</span>开始计算收益');
+				isAdd2();
+				if($('.error-msg').hasClass('color-ff560c')){
+					$('.error-msg').removeClass('color-ff560c');
+
+				}
+			});
+
+			//重新发送验证码
+			$('.password-resend').on('click',function(){
+				var phoneNo = $('.password .password-title').attr('dataphone');
+				phoneNo =phoneNo.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+				$('.password .password-title .color-ff560c').text(phoneNo);
+				getTime();
+			});
+
+			// 关闭遮罩层
+			$('.password-cancel').on('click',function(){
+				$('.keyset').hide();
+				// 移除class='verify-poitn' 这样在进入时才能清除密码
+				$('.password-input li').each(function(){
+					$(this).removeClass('verify-poitn').removeAttr("id");
+				});
+				clearInterval(timer);
+			});
+
+			$("#quota").bind("change",function(){
+				changeMon();
+			});
+			//金额oninput事件
+			$('#quota').bind('input propertychange', function() {
+				var chiyouMoney = Number(replaceAll($(".chiyou").html()));
+				var maxInMoney = ((chiyouMoney > remainMoney) && (remainMoney >0))? remainMoney :chiyouMoney;
+				var remainFlag = ((chiyouMoney > remainMoney) && (remainMoney >0))? 1 : 0;
+				checkInput(true,maxInMoney,remainFlag);
+			});
+		});	
+
+			//下一步
+			var goNext = function(){
+				$('.password-input li').each(function(){
+					$(this).text('');
+				});
+				$('.keyset').show();
+				// 关闭弹窗清除定时器时，$('.password-resend').text()是清除定时器的时间。
+				// 再进入该页面就会从停止时的时间跳到59秒。故加入下一行代码
+				$('.password-resend').text('60秒后重新获取');
+				// 60秒短信倒计时
+				getTime();
+			};
+
+			/*输入验证码*/
+			var liNum = $(".password ul li");
+			var verifi = [];
+			$(".line-key .num").on('click',function () {
+				var i = $(".password ul li.verify-poitn").length;
+				console.log('i:',i);
+				if (i <=(liNum.length-1)) {
+					liNum[i].id = $(this).find('.data').html();
+					liNum[i].className = 'verify-poitn';
+					verifi.push(liNum[i].id);
+				}
+				console.log('verifi',verifi);
+				i++;
+				if(i == 6){
+					verifi = verifi.join('');
+					setTimeout(function () {
+						buyFund(verifi);
+					},500);
+				}
+			}).on('touchstart',function() {
+				$(this).css("background-color", "grey");
+			}).on('touchend',function() {
+				$(this).css("background-color", "#fff");
+			});
+			/*删除验证码*/
+			$(".keyboard").on('click','#greyBac',function () {
+				var j = $(".password ul li.verify-poitn").length;
+				if (j >= 1) {
+					liNum[j-1].id = '';
+					liNum[j-1].className = '';
+					verifi.pop(); // 删除验证码数组
+				}
+				j--;
+			});
+
+
+			/**
+			 *
+			 * @param flag
+			 * @param maxNum 最大可转入金额
+			 * @param remainFlag 标识此时的最大可转入金额是可用余额还是限额
+			 */
+			function checkInput(flag,maxNum,remainFlag) {
+				$('.error-msg').hide();
+				var money =$('#quota').val();
+				if(checkMoney(money) && parseFloat(money)>0)  // 输入金额格式正确，并且大于零时//jacket add parseFloat
+				{
+					if(flag){
+						/*转入份额与持有份额比较*/
+						if(parseFloat(money)>parseFloat(maxNum) && (remainFlag == 0)){
+							isAdd2();
+							$('.error-msg').show().text('转入金额超过您的可用余额');
+							return;
+						}else if(parseFloat(money)>parseFloat(maxNum) && (remainFlag == 1)){
+							isAdd2();
+							$('.error-msg').show().text('转入金额超过最大可持有限额');
+							return;
+						}
+					}
+					isAdd1();
+					$('#quota').val(money);
+					var dx = DX(money);
+					$('.error-msg').show().text('金额大写：'+dx);
+				}else{
+					if(isNaN(Number(money))  || parseFloat(money) <= 0){
+						isAdd2();
+						$('.error-msg').show().text('请输入正确的金额');
+					}else{
+						if(money.length!=0){
+							var amount = money.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');
+							if(flag){
+								if(parseFloat(money)>parseFloat(maxNum)){
+									isAdd2();
+									$('.error-msg').show().text('超过最大可转入金额');
+									return;
+								}
+							}
+							isAdd1();
+							$('#quota').val(amount);
+							var dx1 = DX(amount);
+							$('.error-msg').show().text('金额大写：'+dx1);
+						}else{
+							isAdd2();
+							$('.error-msg').show().text('');
+						}
+					}
+				}
+			}
+
+			//短信60秒封装
+			function getTime(){
+			/* 	$('.password-title').html('验证码已发送至<span class="color-ff560c">${phoneNo }</span>'); */
+				$('.password-resend').attr('disabled','disabled');
+				valideCode();
+				var countdown = 59;
+				timer=setInterval(function (){
+					if (countdown == 0) {
+						clearInterval(timer);
+						$('.password-resend').removeAttr('disabled');
+						$('.password-resend').text('点击发送');
+						$('.password-resend').css('color','#50a5fc');
+						countdown = 59;
+						return;
+					} else {
+						$('.password-resend').attr('disabled','disabled');
+						$('.password-resend').text(countdown + '秒后重新获取')
+						$('.password-resend').css('color','#666');
+						countdown--;
+					};
+					//循环60次
+				} , 1000);
+			}
+
+			// 发送短信
+			function valideCode() {
+				var url = "<%=request.getContextPath()%>/accountOpen/valideCode.do";
+				$.post(url, {
+					verCodeType:"O"
+				}, function(data){
+					console.log('短信',data);
+					data = JSON.parse(data);
+					if(data.errorCode ==="000000"){
+						layer.open({
+							content:'发送成功',
+							time:2,
+							skin:'msg',
+						});
+					}else{
+						var error = (data.errorCode === '999999')?'系统异常，请稍后再试！':data.errorMsg;
+						layer.open({
+							content:error,
+							time:2,
+							skin:'msg',
+						});
+					}
+				}).error(function(){
+					layer.open({
+						content:'连接超时',
+						time:2,
+						skin:'msg',
+					});
+				});
+			}
+
+			/**
+			 * 购买基金
+			 * @param code  验证码
+			 */
+			function buyFund(code) {
+				var url =  "http://localhost:8080/fop-web/mxbtransaction/mxbBuyJournal.do";
+				$.post(url, {
+					amount:replaceAll($('#quota').val()), // 申购份数
+					phone:$('.password .password-title .color-ff560c').attr('dataphone'),
+					fundCode :'201709',
+					verCode:code,
+					verInd:'Y', // 验证标志
+					verCodeType:'I', // 验证码类型				
+				}, function(data){
+					if (data.errorCode == "000000" || data.errorCode == "200099") {
+						/*密码键盘消失*/
+						$('.keyset').hide();
+					    window.location.href='into-success.html';
+					} else if(data.errorCode == "200034" || data.errorCode == "200035"){
+						$('.password-title').html('<span class="color-ff560c">'+data.errorMsg+'</span>');
+						// 移除class='verify-poitn' 
+						$('.password-input li').each(function(){
+							$(this).removeClass('verify-poitn').removeAttr("id");
+							$(this).text('');
+						});
+					}else {
+						var error = (data.errorCode === '999999') ? '系统异常，请稍后再试！':data.errorMsg;
+						/*密码键盘消失*/
+						$('.keyset').hide();
+					  	window.location.href='into-fail.html?errorMsg='+error;
+					}
+				}).error(function(){
+					$('.keyset').hide();
+					layer.open({
+						content:'连接超时',
+						time:2,
+						skin:'msg',
+					});
+				});
+			}
+		</script>
+	</body>
+</html>
